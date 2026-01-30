@@ -5,20 +5,27 @@ import GameHistory from './gameHistory.jsx';
 function App() {
   const [playerName, setPlayerName] = useState('');
   const [lastToss, setLastToss] = useState(null);
+  const [currentSeries, setCurrentSeries] = useState(1);
   const [gameHistory, setGameHistory] = useState([]);
-
-   useEffect(() => {
-    if (lastToss) {
-      setGameHistory([...gameHistory, lastToss]);
-    }
-  }, [lastToss]);
 
   const tossTheCoin = () => {
     return {
-      playerName: playerName,
+      playerName: playerName || 'Anonymous',
       result: Math.random() < 0.5 ? 'Heads' : 'Tails',
       timestamp: new Date()
     };
+  };
+
+  const playGame = () => {
+    const tossResult = tossTheCoin();
+    if(tossResult.result === lastToss?.result) {
+      setCurrentSeries(currentSeries + 1);
+    } else {
+      setCurrentSeries(1);
+    }
+
+    setLastToss(tossResult);
+    setGameHistory([...gameHistory, tossResult]);
   };
 
   const onPlayerNameInputChange = (e) => {
@@ -37,19 +44,15 @@ function App() {
 
     <label htmlFor="playerNameInput">Player: </label>
     <input id="playerNameInput" type="text" value={playerName} onChange={onPlayerNameInputChange} />
-    <button onClick={() => setLastToss(tossTheCoin())}>Toss the coin</button>
-    <div>{lastToss?.result}</div>
+    <button onClick={() => playGame()}>Toss the coin</button>
+    <div>
+      <h4>{lastToss?.result}</h4>
+      {lastToss && (
+        <span className='greyed-out'>({currentSeries} times in a row)</span>
+      )}
+    </div>
     <hr/>
     <GameHistory history={gameHistory} onClearHistory={clearGameHistory} /> 
-    {/* <h2>Game History</h2>
-    <button onClick={() => clearGameHistory()}>Clear History</button>
-    <ul>
-      {gameHistory.map((game, index) => (
-        <li key={index}>
-          {game.playerName} - {game.result} at {game.timestamp.toLocaleTimeString()}
-        </li>
-      ))}
-    </ul> */}
   </div>
   );
 }
