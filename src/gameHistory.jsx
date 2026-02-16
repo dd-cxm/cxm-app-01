@@ -6,7 +6,7 @@ const GameHistory = ({ history, onClearHistory }) => {
     const onSearchGameHistoryInputChange = (e) => setSearchGameHistoryInput(e.target.value);
 
     const matchSearchTerm = (game) => {
-        let gameString = `${game.playerName} ${game.result} ${game.timestamp.toLocaleTimeString()}`;
+        let gameString = `${game.playerName} ${game.result} ${game.timestamp}`;
         return searchGameHistoryInput && gameString.toLowerCase().includes(searchGameHistoryInput.toLowerCase());
     };
   
@@ -33,7 +33,7 @@ const GameHistory = ({ history, onClearHistory }) => {
 const GameHistoryItem = ({ game, isSearchResult }) => {
     return (
         <li className={isSearchResult ? 'search-result' : ''}>
-        {game.playerName} - {game.result} at {game.timestamp.toLocaleTimeString()}
+        {game.playerName} - {game.result} at {game.timestamp}
         </li>
     );
 }

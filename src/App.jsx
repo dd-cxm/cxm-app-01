@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
 import GameHistory from './gameHistory.jsx'
+import useStorageState from './useStorageState.js';
 
 function App() {
   const [playerName, setPlayerName] = useState('');
   const [lastToss, setLastToss] = useState(null);
   const [currentSeries, setCurrentSeries] = useState(1);
-  const [gameHistory, setGameHistory] = useState([]);
+  const [gameHistory, setGameHistory] = useStorageState('gameHistory', []);
 
   const tossTheCoin = () => {
     return {
       playerName: playerName || 'Anonymous',
       result: Math.random() < 0.5 ? 'Heads' : 'Tails',
-      timestamp: new Date()
+      timestamp: new Date().toLocaleDateString()
     };
   };
 
