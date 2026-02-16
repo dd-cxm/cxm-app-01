@@ -13,3 +13,23 @@ button {
 .greyed-out {
   color: #888;
 }
+
+.game-history {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 2rem auto;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 0;
+    border-bottom: 1px solid #eee;
+    gap: 5px;
+  }
+
+  li.search-result {
+    background-color: orange;
+  }
+}

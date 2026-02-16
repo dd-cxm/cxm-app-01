@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import GameHistory from './gameHistory.jsx';
+import GameHistory from './gameHistory.jsx'
 
 function App() {
   const [playerName, setPlayerName] = useState('');
@@ -30,13 +30,12 @@ function App() {
 
   const onPlayerNameInputChange = (e) => {
     setPlayerName(e.target.value);
-    setLastToss(null);
   };
 
   const clearGameHistory = () => {
     setGameHistory([]);
     setLastToss(null);
-  }
+  };
 
   return (
   <div>
@@ -45,14 +44,15 @@ function App() {
     <label htmlFor="playerNameInput">Player: </label>
     <input id="playerNameInput" type="text" value={playerName} onChange={onPlayerNameInputChange} />
     <button onClick={() => playGame()}>Toss the coin</button>
-    <div>
-      <h4>{lastToss?.result}</h4>
-      {lastToss && (
+    {gameHistory.length > 0 && (
+      <>
+      <div>
+        <h4>{lastToss?.result}</h4>
         <span className='greyed-out'>({currentSeries} times in a row)</span>
-      )}
-    </div>
-    <hr/>
-    <GameHistory history={gameHistory} onClearHistory={clearGameHistory} /> 
+      </div>
+      <GameHistory history={gameHistory} onClearHistory={clearGameHistory} />
+      </>
+    )}
   </div>
   );
 }
